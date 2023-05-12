@@ -1,4 +1,5 @@
 import pytest
+from pytest import MonkeyPatch
 from unittest.mock import MagicMock
 from drivetrain import Drivetrain
 
@@ -41,4 +42,19 @@ def test_resetencoders(drivetrain: Drivetrain)->None:
         # Assert
         leftreset.assert_called_once()
         rightreset.assert_called_once()
+
+
+def test_averageDistanceMeter(drivetrain: Drivetrain, monkeypatch: MonkeyPatch):
+        #setup
+
+        def mock_getRightDistanceMeter(self):
+                return 2.0
+        def mock_getleftDistanceMeter(self):
+                return 3.0
+
+        monkeypatch.setattr(Drivetrain,"getLeftDistanceMeter",mock_getleftDistanceMeter)
+        monkeypatch.setattr(Drivetrain, "getrightDistanceMeter", mock_getRightDistanceMeter)
+        #Action
+        dist=drivetrain.averageDistanceMeter()
+
 

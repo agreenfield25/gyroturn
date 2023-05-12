@@ -48,7 +48,7 @@ class Drivetrain:
         return self.rightEncoder.getDistance()
 
     def averageDistanceMeter(self) -> float:
-        return (self.getRightDistanceMeter()+self.getLeftDistanceMeter())/2.0
+        return self.getRightDistanceMeter()+self.getLeftDistanceMeter()/2.0
 
     def arcadeDrive(self, rot: float, fwd: float) -> None:
         """
